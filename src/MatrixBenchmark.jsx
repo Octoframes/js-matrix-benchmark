@@ -4,12 +4,12 @@ function MatrixBenchmark() {
   const [mytracker, setMyTracker] = useState(0);
 
   // Function to generate a single random matrix
-  function generateRandomMatrix(rows, cols, maxVal) {
+  function generateRandomMatrix(rows, cols) {
     const matrix = new Array(rows);
     for (let i = 0; i < rows; i++) {
-      const row = new Int8Array(cols);
+      const row = new Float32Array(cols);
       for (let j = 0; j < cols; j++) {
-        row[j] = Math.floor(Math.random() * maxVal);
+        row[j] = Math.random();
       }
       matrix[i] = row;
     }
@@ -19,14 +19,13 @@ function MatrixBenchmark() {
   // Generate 20 random matrices
   const matrices = new Array(20);
   for (let i = 0; i < matrices.length; i++) {
-    matrices[i] = generateRandomMatrix(360, 360, 128);
+    matrices[i] = generateRandomMatrix(360, 360);
   }
 
   var start = new Date().valueOf();
-  //   console.log(matrices);
 
   // Create an empty matrix to store the result
-  const resultMatrix = new Array(360).fill(0).map(() => new Array(360).fill(0));
+  const resultMatrix = new Array(360).fill(0).map(() => new Float32Array(360).fill(0));
 
   // Add each matrix to the result
   for (let matrix of matrices) {
