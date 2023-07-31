@@ -1,4 +1,5 @@
 import { useState } from "react";
+import MatrixImage from "./MatrixImage";
 
 function MatrixBenchmark() {
   const [mytracker, setMyTracker] = useState(0);
@@ -31,7 +32,7 @@ function MatrixBenchmark() {
   for (let matrix of matrices) {
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
-        resultMatrix[i][j] += matrix[i][j];
+        resultMatrix[i][j] += matrix[i][j]*10;
       }
     }
   }
@@ -51,6 +52,7 @@ function MatrixBenchmark() {
       <p>T1 = {duration} ms </p>
       <p>Tracker = {mytracker}</p>
       <button onClick={handleClick}>Restart</button>
+      <MatrixImage matrix={resultMatrix} />
     </>
   );
 }
