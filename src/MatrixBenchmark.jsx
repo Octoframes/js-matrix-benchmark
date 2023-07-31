@@ -1,5 +1,7 @@
+import { useState } from "react";
+
 function MatrixBenchmark() {
-  //   console.log("MatrixBenchmark");
+  const [mytracker, setMyTracker] = useState(0);
 
   // Function to generate a single random matrix
   function generateRandomMatrix(rows, cols, maxVal) {
@@ -36,10 +38,15 @@ function MatrixBenchmark() {
   }
   let duration = new Date().valueOf() - start;
 
+  function handleClick() {
+    setMyTracker(mytracker + 1);
+  }
+
   return (
     <>
-      <p>T1 = {duration} ms </p>;
-      {/* <button onClick={handleClick}>Restart</button> */}
+      <p>T1 = {duration} ms </p>
+      <p>Tracker = {mytracker}</p>
+      <button onClick={handleClick}>Restart</button>
     </>
   );
 }
