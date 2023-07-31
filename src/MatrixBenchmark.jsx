@@ -1,6 +1,4 @@
 function MatrixBenchmark() {
-  var start = new Date().valueOf();
-
   //   console.log("MatrixBenchmark");
 
   // Function to generate a single random matrix
@@ -22,9 +20,28 @@ function MatrixBenchmark() {
     matrices[i] = generateRandomMatrix(360, 360, 128);
   }
 
+  var start = new Date().valueOf();
+  //   console.log(matrices);
+
+  // Create an empty matrix to store the result
+  const resultMatrix = new Array(360).fill(0).map(() => new Array(360).fill(0));
+
+  // Add each matrix to the result
+  for (let matrix of matrices) {
+    for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[i].length; j++) {
+        resultMatrix[i][j] += matrix[i][j];
+      }
+    }
+  }
   let duration = new Date().valueOf() - start;
 
-  return <p>T1 = {duration} ms </p>;
+  return (
+    <>
+      <p>T1 = {duration} ms </p>;
+      {/* <button onClick={handleClick}>Restart</button> */}
+    </>
+  );
 }
 
 export default MatrixBenchmark;
