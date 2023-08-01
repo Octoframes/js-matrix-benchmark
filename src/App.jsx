@@ -1,57 +1,79 @@
-import React, { useState, useEffect, useRef } from "react";
-import "./App.css";
-import MatrixBenchmark from "./MatrixBenchmark.jsx";
+import logo from "./scanner.png";
+import { useState, useRef, useEffect } from "react";
 
 const App = () => {
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
+  const [dX, setDX] = useState(0);
+  const [dY, setDY] = useState(0);
   const [rotation, setRotation] = useState(0);
-  const imgRef = useRef(null);
-  let mouseDown = false;
+  const [faceLeft, setFaceLeft] = useState(0);
+  const [faceTop, setFaceTop] = useState(0);
 
-  const handleMouseDown = () => {
-    mouseDown = true;
-  };
+  const faceRef = useRef(null);
 
-  const handleMouseUp = () => {
-    mouseDown = false;
-  };
+  useEffect(() => {
+    if (faceRef.current) {
+      setFaceLeft(faceRef.current.offsetLeft + faceRef.current.offsetWidth / 2);
+      setFaceTop(faceRef.current.offsetTop + faceRef.current.offsetHeight / 2);
+    }
+  }, [faceRef]);
 
   const handleMouseMove = (event) => {
-    if (!mouseDown) return;
+    setMouseX(event.clientX);
+    setMouseY(event.clientY);
 
-    const rect = imgRef.current.getBoundingClientRect();
-    const x = event.clientX - rect.left - rect.width / 2;
-    const y = event.clientY - rect.top - rect.height / 2;
-    const rad = Math.atan2(y, x);
-    const deg = rad * (180 / Math.PI) + 270;
+    let newDX = event.clientX - faceLeft;
+    let newDY = event.clientY - faceTop;
 
-    setRotation(deg);
-  };
+    setDX(newDX);
+    setDY(newDY);
 
-  const handleClick = (event) => {
-    const rect = imgRef.current.getBoundingClientRect();
-    const x = event.clientX - rect.left - rect.width / 2;
-    const y = event.clientY - rect.top - rect.height / 2;
-    const rad = Math.atan2(y, x);
-    const deg = rad * (180 / Math.PI + 180);
+    let degree = (Math.atan(-newDX / newDY) * 180) / Math.PI + 90;
 
-    setRotation(deg);
+    if (newDY > 0) {
+      degree += 180;
+    }
+
+    setRotation(degree);
+
+    if (faceRef.current) {
+      faceRef.current.style.transform = "rotate(" + degree + "deg)";
+    }
   };
 
   return (
-    <div className="App">
-      <img
-        src="src/scanner.png"
-        draggable="false"
-        alt="scanner"
-        style={{ transform: `rotate(${rotation}deg)` }}
-        ref={imgRef}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
-        onClick={handleClick}
-      />
-      <h1>Hello, world!</h1>
-      <MatrixBenchmark />
+    <div
+      onMouseMove={handleMouseMove}
+      style={{
+        backgroundColor: "black",
+        backgroundImage: "linear-gradient(to bottom, grey,black)",
+        minHeight: "70vh",
+        paddingTop: "10vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          width: "80%",
+        }}
+      >
+        <div>
+          <img
+            ref={faceRef}
+            id="bigFace"
+            src={logo}
+            width="20%"
+            style={{ margin: "10%" }}
+          />
+        </div>
+        <div></div>
+      </div>
     </div>
   );
 };
