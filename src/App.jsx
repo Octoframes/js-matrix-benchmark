@@ -1,80 +1,37 @@
+import React, { useState, useRef } from "react";
 import logo from "./scanner.png";
-import { useState, useRef, useEffect } from "react";
 
 const App = () => {
-  const [mouseX, setMouseX] = useState(0);
-  const [mouseY, setMouseY] = useState(0);
-  const [dX, setDX] = useState(0);
-  const [dY, setDY] = useState(0);
-  const [rotation, setRotation] = useState(0);
-  const [faceLeft, setFaceLeft] = useState(0);
-  const [faceTop, setFaceTop] = useState(0);
+  const [rotateDegree, setRotateDegree] = useState(0);
+  const imgRef = useRef(null);
 
-  const faceRef = useRef(null);
+  const handleMouseDown = (e) => {
+    const rect = imgRef.current.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const rad = Math.atan2(e.clientY - y, e.clientX - x);
+    const deg = rad * (180 / Math.PI) +180;
 
-  useEffect(() => {
-    if (faceRef.current) {
-      setFaceLeft(faceRef.current.offsetLeft + faceRef.current.offsetWidth / 2);
-      setFaceTop(faceRef.current.offsetTop + faceRef.current.offsetHeight / 2);
-    }
-  }, [faceRef]);
+    setRotateDegree(deg);
+  };
 
-  const handleMouseMove = (event) => {
-    setMouseX(event.clientX);
-    setMouseY(event.clientY);
-
-    let newDX = event.clientX - faceLeft;
-    let newDY = event.clientY - faceTop;
-
-    setDX(newDX);
-    setDY(newDY);
-
-    let degree = (Math.atan(-newDX / newDY) * 180) / Math.PI + 90;
-
-    if (newDY > 0) {
-      degree += 180;
-    }
-
-    setRotation(degree);
-
-    if (faceRef.current) {
-      faceRef.current.style.transform = "rotate(" + degree + "deg)";
+  console.log(rotateDegree);
+  const handleMouseMove = (e) => {
+    if (e.buttons === 1) { // if mouse button is pressed
+      handleMouseDown(e);
     }
   };
 
   return (
-    <div
+    <img
+      ref={imgRef}
+      src={logo}
+      alt="scanner"
+      style={{ transform: `rotate(${rotateDegree}deg)` }}
+      onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
-      style={{
-        backgroundColor: "black",
-        backgroundImage: "linear-gradient(to bottom, grey,black)",
-        minHeight: "70vh",
-        paddingTop: "10vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "80%",
-        }}
-      >
-        <div>
-          <img
-            ref={faceRef}
-            id="bigFace"
-            src={logo}
-            width="20%"
-            style={{ margin: "10%" }}
-          />
-        </div>
-        <div></div>
-      </div>
-    </div>
+      draggable={false}
+    />
   );
 };
 
