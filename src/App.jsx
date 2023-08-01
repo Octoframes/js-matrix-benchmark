@@ -3,10 +3,9 @@ import scanner from "./scanner.png";
 
 const App = () => {
   const [rotateDegree, setRotateDegree] = useState(0);
-
   const imageRef = useRef(null);
 
-  const handleMouseDown = (e) => {
+  const calculateRotation = (e) => {
     const rect = imageRef.current.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
@@ -16,13 +15,30 @@ const App = () => {
     setRotateDegree(deg);
   };
 
-  console.log(rotateDegree);
+  const handleMouseDown = (e) => {
+    calculateRotation(e);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
   const handleMouseMove = (e) => {
     if (e.buttons === 1) {
-      // if mouse button is pressed
-      handleMouseDown(e);
+      calculateRotation(e);
     }
   };
+
+  const handleMouseUp = () => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  };
+
+  useEffect(() => {
+    return () => {
+      // Remove event listeners when the component is unmounted
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, []);
 
   return (
     <div className="background-left">
@@ -33,7 +49,6 @@ const App = () => {
         alt="scanner"
         style={{ transform: `rotate(${rotateDegree}deg)` }}
         onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
         draggable={false}
       />
     </div>
