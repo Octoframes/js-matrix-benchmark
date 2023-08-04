@@ -4,7 +4,7 @@ self.onmessage = function (e) {
 
   const startTime = new Date().getTime(); // Record the start time
 
-  for (let i = 0; i < 10e8; i++) {}
+  for (let i = 0; i < 20e8; i++) {}
 
   const endTime = new Date().getTime(); // Record the end time
 

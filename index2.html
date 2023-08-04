@@ -7,14 +7,18 @@
     <script>
         var myWorker = new Worker('worker.js');
         var isWorkerBusy = false;
+        var latestValue = null;
+        var lastPostedValue = null;
 
         // Event listener for input changes
         document.querySelector('input').addEventListener('input', function() {
             var inputValue = this.value;
+            latestValue = inputValue;
             console.log(inputValue);
-            
+
             if (!isWorkerBusy) {
                 isWorkerBusy = true;
+                lastPostedValue = inputValue;
                 myWorker.postMessage(inputValue);
             }
         });
@@ -25,10 +29,20 @@
 
             // The worker has finished processing, it's not busy anymore
             isWorkerBusy = false;
+
+            // If the latest value has changed since we last posted to the worker,
+            // post the latest value to the worker.
+            if (lastPostedValue !== latestValue) {
+                isWorkerBusy = true;
+                lastPostedValue = latestValue;
+                myWorker.postMessage(latestValue);
+            }
         };
 
         // Posting the initial value to the worker
         var inputValue = document.querySelector('input').value;
+        latestValue = inputValue;
+        lastPostedValue = inputValue;
         console.log(inputValue);
         myWorker.postMessage(inputValue);
         isWorkerBusy = true;
