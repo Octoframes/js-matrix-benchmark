@@ -1,6 +1,8 @@
 
 self.onmessage = function (e) {
-  console.log("Message received from main script");
+
+  console.log("Message received " + e.data);
+
 
   const startTime = new Date().getTime(); // Record the start time
 
@@ -8,11 +10,12 @@ self.onmessage = function (e) {
 
   const endTime = new Date().getTime(); // Record the end time
 
-  console.log("Posting message back to main script");
 
   const timeTaken = endTime - startTime;
   const currentTime = `${timeTaken} ms`;
 
   const workerResult = "Result: " + e.data + " " + currentTime;
+  console.log(workerResult);
   postMessage(workerResult);
+
 };
