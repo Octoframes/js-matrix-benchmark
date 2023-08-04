@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html>
-
-
 <body>
     <h1>Web Worker Example</h1>
-    <input value="heyyy">
-</body>
+    <input id="workerInput" type="text" value="heyyy">
 
+    <script>
+        var myWorker = new Worker('worker.js');
+
+        // Event listener for input changes
+        document.querySelector('input').addEventListener('input', function() {
+            var inputValue = this.value;
+            console.log(inputValue);
+            myWorker.postMessage(inputValue);
+        });
+
+        myWorker.onmessage = e => {
+            console.log('Message received from worker', e.data)
+            document.querySelector('h1').textContent = e.data;
+        };
+
+        // Posting the initial value to the worker
+        var inputValue = document.querySelector('input').value;
+        console.log(inputValue);
+        myWorker.postMessage(inputValue);
+    </script>
+</body>
 </html>
-<script>
-    var myWorker = new Worker('worker.js');
-    var inputValue = document.querySelector('input').value;
-    console.log(inputValue);
-    myWorker.onmessage = e => {
-        console.log('Message received from worker', e.data)
-        document.querySelector('h1').textContent = e.data;
-    }
-    
-    myWorker.postMessage(inputValue);
-</script>
