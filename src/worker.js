@@ -1,7 +1,7 @@
 
 self.onmessage = function (e) {
 
-  console.log("Message received " + e.data);
+  // console.log("Message received " + e.data);
 
 
   const startTime = new Date().getTime(); // Record the start time
