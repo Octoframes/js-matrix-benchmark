@@ -1,56 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
-// Assuming that worker.js is in public directory
 import MyWorker from './worker?worker'
 
 const WorkerComponent = () => {
     const myWorker = new MyWorker()
-    const [inputValue, setInputValue] = useState('heyyy');
-    const [isWorkerBusy, setIsWorkerBusy] = useState(false);
-    const [latestValue, setLatestValue] = useState(null);
-    const [lastPostedValue, setLastPostedValue] = useState(null);
-    const [workerOutput, setWorkerOutput] = useState('');
-    // This function runs every time the inputValue state changes
-    useEffect(() => {
-        myWorker.postMessage(inputValue);
-        setLatestValue(inputValue);
-        console.log('Main start worker');
-        console.log(isWorkerBusy)
-        if (!isWorkerBusy) {
-          console.log('Main post message');
-          setLastPostedValue(inputValue);
-          setIsWorkerBusy(true);
-        }
-    }, [inputValue]);
-    useEffect(() => {
-        myWorker.onmessage = e => {
-            console.log('Message received from worker', e.data);
-            setWorkerOutput(e.data);
-            setIsWorkerBusy(false);
-        }
-    }, [])
-    //         // The worker has finished processing, it's not busy anymore
-    //         setIsWorkerBusy(false);
-    //         // If the latest value has changed since we last posted to the worker,
-    //         // post the latest value to the worker.
-    //         if (lastPostedValue !== latestValue) {
-                // setIsWorkerBusy(true);
-    //             setLastPostedValue(latestValue);
-    //             myWorker.postMessage(latestValue);
-    //         }
-    //     };
-    //     // Cleanup function to terminate worker when the component unmounts
-    //     return () => {
-    //         myWorker.terminate();
-    //     };
-    // }, [latestValue, lastPostedValue]);
+    const [inputValue, setInputValue] = useState('heyyyyyy');
+
+    // Event handler for input changes
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
+        console.log('inputValue', inputValue);
+        myWorker.postMessage(inputValue)
     };
+
     return (
         <div>
-            <input type="text" value={inputValue} onChange={handleInputChange} />
-            <h1>{workerOutput}</h1>
+            <input
+                type="text"
+                value={inputValue} 
+                onChange={handleInputChange}
+            />
         </div>
     );
 };
+
 export default WorkerComponent;
