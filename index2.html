@@ -6,23 +6,32 @@
 
     <script>
         var myWorker = new Worker('worker.js');
+        var isWorkerBusy = false;
 
         // Event listener for input changes
         document.querySelector('input').addEventListener('input', function() {
             var inputValue = this.value;
             console.log(inputValue);
-            myWorker.postMessage(inputValue);
+            
+            if (!isWorkerBusy) {
+                isWorkerBusy = true;
+                myWorker.postMessage(inputValue);
+            }
         });
 
         myWorker.onmessage = e => {
-            console.log('Message received from worker', e.data)
+            console.log('Message received from worker', e.data);
             document.querySelector('h1').textContent = e.data;
+
+            // The worker has finished processing, it's not busy anymore
+            isWorkerBusy = false;
         };
 
         // Posting the initial value to the worker
         var inputValue = document.querySelector('input').value;
         console.log(inputValue);
         myWorker.postMessage(inputValue);
+        isWorkerBusy = true;
     </script>
 </body>
 </html>
