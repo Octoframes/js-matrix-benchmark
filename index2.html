@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
-<script>
-    var myWorker = new Worker('worker.js');
 
-    myWorker.onmessage = e => console.log('Message received from worker', e.data)
-
-    myWorker.postMessage('Hello Worker');
-</script>
 
 <body>
     <h1>Web Worker Example</h1>
-    <input>
+    <input value="heyyy">
 </body>
 
 </html>
+<script>
+    var myWorker = new Worker('worker.js');
+    var inputValue = document.querySelector('input').value;
+    console.log(inputValue);
+    myWorker.onmessage = e => {
+        console.log('Message received from worker', e.data)
+        document.querySelector('h1').textContent = e.data;
+    }
+    
+    myWorker.postMessage(inputValue);
+</script>

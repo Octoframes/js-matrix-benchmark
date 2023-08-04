@@ -9,12 +9,12 @@
 self.onmessage = function (e) {
   console.log("Message received from main script");
   for (let i = 0; i < 50e8; i++) {}
-  var workerResult = "Result: " + e.data;
   console.log("Posting message back to main script");
   let date = new Date();
   let currentTime = `${date.getSeconds()}.${date.getMilliseconds()} sec`;
-
-  postMessage(currentTime);
+  
+  var workerResult = "Result: " + e.data + currentTime;
+  postMessage(workerResult);
 };
 
 
