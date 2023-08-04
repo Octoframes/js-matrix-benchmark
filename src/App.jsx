@@ -19,7 +19,7 @@ const WorkerComponent = () => {
           console.log('Main post message');
           myWorker.postMessage(inputValue);
           setLastPostedValue(inputValue);
-          setIsWorkerBusy(true);
+          // setIsWorkerBusy(true);
         }
     }, [inputValue]);
 
@@ -34,13 +34,13 @@ const WorkerComponent = () => {
     //         // If the latest value has changed since we last posted to the worker,
     //         // post the latest value to the worker.
     //         if (lastPostedValue !== latestValue) {
-    //             setIsWorkerBusy(true);
+                // setIsWorkerBusy(true);
     //             setLastPostedValue(latestValue);
     //             myWorker.postMessage(latestValue);
     //         }
     //     };
 
-        // Cleanup function to terminate worker when the component unmounts
+    //     // Cleanup function to terminate worker when the component unmounts
     //     return () => {
     //         myWorker.terminate();
     //     };
