@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<script>
+    var myWorker = new Worker('worker.js');
+
+    myWorker.onmessage = e => console.log('Message received from worker', e.data)
+
+    myWorker.postMessage('Hello Worker');
+</script>
+
+<body>
+    <h1>Web Worker Example</h1>
+    <input>
+</body>
+
+</html>
