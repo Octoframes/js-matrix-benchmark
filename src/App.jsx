@@ -8,12 +8,13 @@ function Home() {
   const worker = useWorker(createWorker);
   const [message, setMessage] = React.useState(null);
   const [myValue, setMyValue] = useState("");
+  // const [isWorking, setIsWorking] = useState(false);
 
   useEffect(() => {
     (async () => {
       // Note: in your actual app code, make sure to check if Home
       // is still mounted before setting state asynchronously!
-      const webWorkerMessage = await worker.hello("Hii");
+      const webWorkerMessage = await worker.hello(myValue);
       setMessage(webWorkerMessage);
     })();
   }, [worker]);
@@ -31,6 +32,7 @@ function Home() {
 }
 
 export default Home;
+
 
 // import {useState } from "react";
 // function slowFunction() {
