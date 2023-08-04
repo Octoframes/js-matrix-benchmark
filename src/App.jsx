@@ -19,15 +19,18 @@ const WorkerComponent = () => {
           console.log('Main post message');
           myWorker.postMessage(inputValue);
           setLastPostedValue(inputValue);
-          // setIsWorkerBusy(true);
+          setIsWorkerBusy(true);
         }
     }, [inputValue]);
 
-    // useEffect(() => {
-    //     myWorker.onmessage = e => {
-    //         console.log('Message received from worker', e.data);
-    //         setWorkerOutput(e.data);
+    useEffect(() => {
+        myWorker.onmessage = e => {
+            console.log('Message received from worker', e.data);
+            setWorkerOutput(e.data);
+            setIsWorkerBusy(false);
 
+        }
+    }, [])
     //         // The worker has finished processing, it's not busy anymore
     //         setIsWorkerBusy(false);
 
