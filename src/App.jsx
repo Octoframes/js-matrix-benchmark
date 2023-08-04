@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import scanner from "./scanner.png";
 
 import MyWorker from "./worker?worker";
 
@@ -52,58 +51,11 @@ const WorkerComponent = () => {
     setInputValue(event.target.value);
   };
 
-  const [rotateDegree, setRotateDegree] = useState(0);
-  const imageRef = useRef(null);
-
-  const calculateRotation = (e) => {
-    const rect = imageRef.current.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-    const rad = Math.atan2(e.clientY - y, e.clientX - x);
-    const deg = rad * (180 / Math.PI) + 180;
-
-    setRotateDegree(deg);
-  };
-
-  const handleMouseDown = (e) => {
-    calculateRotation(e);
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-  };
-
-  const handleMouseMove = (e) => {
-    if (e.buttons === 1) {
-      calculateRotation(e);
-    }
-  };
-
-  const handleMouseUp = () => {
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
-  };
-
-  useEffect(() => {
-    return () => {
-      // Remove event listeners when the component is unmounted
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, []);
   return (
     <div>
       <input type="text" value={inputValue} onChange={handleInputChange} />
       <h1>{workerOutput}</h1>
-      <div className="background-left">
-        <img
-          id="centered-image"
-          ref={imageRef}
-          src={scanner}
-          alt="scanner"
-          style={{ transform: `rotate(${rotateDegree}deg)` }}
-          onMouseDown={handleMouseDown}
-          draggable={false}
-        />
-      </div>
+
     </div>
   );
 };
