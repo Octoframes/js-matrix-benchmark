@@ -6,7 +6,7 @@ function App() {
   const [testData, setTestData] = useState(null);
 
   useEffect(() => {
-    fetch("/TEST.json.gz")
+    fetch("https://octoframes.github.io/js-matrix-benchmark/TEST.json")
       .then((response) => response.json())
       .then((data) => setTestData(data))
       .catch((error) => console.error("There was an error!", error));
