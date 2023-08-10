@@ -1,17 +1,12 @@
 import { useState } from "react";
 import MatrixImage from "./MatrixImage";
-// import data from "./assets/ct_slice_730_upper_legs_continuous.json";
-import data from "./assets/ct_slice_1542_teeth_continuous.json";
+// import myarray1 from "./assets/ct_slice_730_upper_legs_continuous.json";
+import mydata from "./assets/ct_slice_1542_teeth_continuousTEST.json";
 function MatrixBenchmark() {
   const [mytracker, setMyTracker] = useState(0);
-  const mydata = data["imgs"];
   
   // Create matrices from data
-  const matrices_from_data = Object.values(mydata).map((matrix) => {
-    return matrix.map((row) => {
-      return Float32Array.from(row);
-    });
-  });
+  const matrices_from_data = mydata.data;
 
   var start = new Date().valueOf();
 
