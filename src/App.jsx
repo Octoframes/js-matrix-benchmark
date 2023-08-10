@@ -7,7 +7,7 @@ function App() {
   const [testData, setTestData] = useState(null);
 
   useEffect(() => {
-    fetch("foo_compressed.json.gzip")
+    fetch("ct_slice_69_feet.json.gzip")
       .then((response) => response.arrayBuffer())
       .then((buffer) => {
         // Decompress the data using pako
@@ -18,6 +18,12 @@ function App() {
       .catch((error) => console.error("There was an error!", error));
   }, []);
 
+
+//   name = "ct_slice_69_feet.png"
+
+// # name = "ct_slice_730_upper_legs.png"
+// # name = "ct_slice_1342_breast.png"
+// # name = "ct_slice_1542_teeth.png"
 
   console.log(testData);
 
