@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MatrixImage from "./MatrixImage";
-import data from "./ct_slice_730_upper_legs_continuous.json";
+// import data from "./assets/ct_slice_730_upper_legs_continuous.json";
+import data from "./assets/ct_slice_1542_teeth_continuous.json";
 function MatrixBenchmark() {
   const [mytracker, setMyTracker] = useState(0);
   const mydata = data["imgs"];
