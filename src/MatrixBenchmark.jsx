@@ -1,12 +1,15 @@
 import { useState } from "react";
 import MatrixImage from "./MatrixImage";
-
-function MatrixBenchmark({ uncompressedData }) {
-    
+import mydata from "./assets/ct_slice_1542_teeth_continuousTEST.json";
+function MatrixBenchmark({uncompressedData}) {
   const [mytracker, setMyTracker] = useState(0);
+  
+  console.log("hiii" , uncompressedData.data);
+  // Create matrices from data
   const matrices_from_data = uncompressedData.data;
+  // const matrices_from_data = mydata.data;
   var start = new Date().valueOf();
-
+  console.log( matrices_from_data)
   // Create an empty matrix to store the result
   const resultMatrix = new Array(360)
     .fill(0)
@@ -21,7 +24,7 @@ function MatrixBenchmark({ uncompressedData }) {
     }
   }
   let duration = new Date().valueOf() - start;
-  console.log(resultMatrix);
+  // console.log(resultMatrix);
 
   function handleClick() {
     setMyTracker(mytracker + 1);
