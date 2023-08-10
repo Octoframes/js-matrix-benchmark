@@ -1,10 +1,11 @@
-import MatrixBenchmark from "./MatrixBenchmark";
-const WorkerComponent = () => {
+import myjson from "./assets/TEST.json";
+const App = () => {
+  console.log(myjson);
   return (
     <div>
-      <MatrixBenchmark/>
+      <h1>Hello world</h1>
     </div>
   );
 };
 
-export default WorkerComponent;
+export default App;
