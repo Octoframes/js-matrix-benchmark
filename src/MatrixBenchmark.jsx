@@ -1,12 +1,31 @@
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import MatrixImage from "./MatrixImage";
-// import myarray1 from "./assets/ct_slice_730_upper_legs_continuous.json";
-import mydata from "./assets/ct_slice_1542_teeth_continuousTEST.json.gz";
+import pako from 'pako';
+
 function MatrixBenchmark() {
   const [mytracker, setMyTracker] = useState(0);
   
   // Create matrices from data
-  const matrices_from_data = mydata.data;
+  const [mydata, setMyData] = useState(null);
+  
+  useEffect(() => {
+    fetch('./assets/ct_slice_1542_teeth_continuousTEST.json.gz')
+      .then((response) => response.arrayBuffer())
+      .then((buffer) => {
+        // Decompress the data using pako
+        const decompressedData = pako.inflate(buffer, { to: 'string' });
+        return JSON.parse(decompressedData);
+      })
+      .then((jsonData) => {
+        setMyData(jsonData);
+      })
+      .catch((error) => {
+        console.error('An error occurred:', error);
+      });
+    }, []); // Empty dependency array to run only on mount
+    
+    console.log(mydata);
+  const matrices_from_data = mydata;
 
   var start = new Date().valueOf();
 
