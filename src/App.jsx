@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import pako from 'pako';
-
+import MatrixBenchmark from "./MatrixBenchmark";
 import "./App.css";
 
 function App() {
@@ -25,6 +25,7 @@ function App() {
     <div>
       {/* {testData && <pre>{JSON.stringify(testData, null, 2)}</pre>} */}
       hi!
+      <MatrixBenchmark uncompressedData={testData} />
     </div>
   );
 }
