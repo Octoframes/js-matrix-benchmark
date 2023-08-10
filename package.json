@@ -1,6 +1,7 @@
 {
   "name": "benchmark",
   "private": true,
+  "homepage": "https://octoframes.github.io/js-matrix-benchmark",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
